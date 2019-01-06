@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   View, Text, TextInput, TouchableOpacity, StatusBar, AsyncStorage, ActivityIndicator,
 } from 'react-native';
@@ -11,6 +12,12 @@ export default class Welcome extends Component {
     username: '',
     loading: false,
     error: false,
+  };
+
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func,
+    }).isRequired,
   };
 
   checkUserExists = async (username) => {
@@ -31,7 +38,7 @@ export default class Welcome extends Component {
     try {
       await this.checkUserExists(username);
       await this.saveUser(username);
-      navigation.navigate('Repositories');
+      navigation.navigate('User');
     } catch (err) {
       this.setState({ loading: false, error: true });
     }
